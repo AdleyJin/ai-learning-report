@@ -59,12 +59,9 @@ export function ReportPanel({ report, onClose, onDownload, onBack }: ReportPanel
           )}
           <div className="flex min-w-0 flex-col justify-center overflow-hidden">
             <h2 className="truncate text-sm font-semibold leading-tight">{report.title}</h2>
-            {(report.generatedAt || report.formats?.length) && (
+            {report.formats?.length && (
               <p className="mt-0.5 truncate text-xs text-[var(--muted)]">
-                {[
-                  report.formats?.length ? report.formats[0].toUpperCase() : null,
-                  report.generatedAt?.split(' ')[0],
-                ].filter(Boolean).join(' · ')}
+                {report.formats[0].toUpperCase()}
               </p>
             )}
           </div>
