@@ -61,7 +61,7 @@ function StepRow({ step, isLast }: { step: AgentStep; isLast: boolean }) {
     :                             'text-[var(--muted)]';
 
   return (
-    <div className="animate-step-fade-in flex gap-3 pb-3">
+    <div className="animate-step-fade-in flex gap-3 pb-1">
       {/* 图标列 + 连接线 */}
       <div className={`flex w-5 shrink-0 flex-col items-center ${iconColor}`}>
         <div className="flex h-5 w-5 items-center justify-center">
@@ -178,7 +178,7 @@ export function AgentProgressCard({ steps, executionSummary }: AgentProgressCard
         style={{ gridTemplateRows: collapsed ? '0fr' : '1fr' }}
       >
         <div className="overflow-hidden">
-          <div className="pb-1 pt-3">
+          <div className="pb-1 pt-4">
             {steps.map((step, idx) => (
               <StepRow key={step.id} step={step} isLast={idx === steps.length - 1} />
             ))}
