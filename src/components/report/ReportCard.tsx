@@ -64,9 +64,8 @@ function ReportCardCompleted({ report, onView, onDownload }: ReportCardProps) {
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           >
-            <Button variant="tertiary" size="sm" onPress={onDownload}>
+            <Button isIconOnly variant="ghost" size="sm" onPress={onDownload} aria-label="下载报告">
               <ArrowDownToLine width={14} height={14} />
-              下载
             </Button>
           </div>
         </div>

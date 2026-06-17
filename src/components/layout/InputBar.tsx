@@ -141,7 +141,7 @@ export function InputBar({ onSubmit, isSubmitting, onStop }: InputBarProps) {
                 aria-label="报告模版"
               >
                 <Tooltip delay={0}>
-                  <Select.Trigger className="items-center !justify-center gap-1 rounded-full border border-[var(--border)] bg-transparent px-3 text-xs shadow-none hover:bg-[color-mix(in_srgb,var(--default)_60%,transparent)]">
+                  <Select.Trigger className="items-center !justify-center gap-1 rounded-full border border-[var(--border)] bg-transparent px-3 text-sm shadow-none hover:bg-[color-mix(in_srgb,var(--default)_60%,transparent)]">
                     <FileText className="size-4 shrink-0 text-[var(--muted)]" />
                     <span className="shrink-0 text-[var(--foreground)]">报告</span>
                     <ChevronDown className="size-3.5 shrink-0 text-[var(--muted)]" />
