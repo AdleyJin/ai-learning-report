@@ -64,7 +64,7 @@ export function InputBar({ onSubmit, isSubmitting, onStop }: InputBarProps) {
   };
 
   return (
-    <div className="bg-[var(--background)] px-3 py-3 sm:px-6 sm:py-4">
+    <div className="bg-[var(--background)] px-3 pt-0 pb-3 sm:px-6 sm:pt-0 sm:pb-4">
       <div className="mx-auto w-full max-w-[720px]">
         {/* 子模版面板：选中模版后在对话框上方弹出 */}
         {template && template.subTemplates.length > 0 && (

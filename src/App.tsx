@@ -380,15 +380,27 @@ export default function App() {
   }, []);
 
   // 可拖拽分割线（百分比，20% ~ 80%）—— 桌面端
-  // 报告中心与报告详情使用各自独立的宽度，互不影响
-  const [centerPct, setCenterPct] = useState(20);   // 报告中心：最小宽度
-  const [detailPct, setDetailPct] = useState(45);   // 报告详情：较宽
+  // 报告中心与报告详情使用各自独立的宽度，关闭后重置为默认值
+  const [centerPct, setCenterPct] = useState(20);
+  const [detailPct, setDetailPct] = useState(45);
+
+  // 关闭侧栏时重置宽度，下次打开恢复默认
+  useEffect(() => {
+    if (sidebarMode === null) {
+      setCenterPct(20);
+      setDetailPct(45);
+    }
+  }, [sidebarMode]);
+
+  // 用 ref 追踪当前模式，让拖拽事件监听器（闭包）始终读取最新值
+  const displayedSidebarModeRef = useRef(displayedSidebarMode);
+  useEffect(() => { displayedSidebarModeRef.current = displayedSidebarMode; }, [displayedSidebarMode]);
+
   const [dividerActive, setDividerActive] = useState(false);
   const isDragging = useRef(false);
 
-  // 当前生效的宽度 / setter，根据侧栏模式动态选取
+  // 当前生效的宽度（用于渲染），根据侧栏模式选取
   const panelPct = displayedSidebarMode === 'detail' ? detailPct : centerPct;
-  const setPanelPct = displayedSidebarMode === 'detail' ? setDetailPct : setCenterPct;
 
   const onDividerMouseDown = useCallback((e: React.MouseEvent) => {
     isDragging.current = true;
@@ -399,10 +411,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const applyPct = (pct: number) => {
+      const clamped = Math.min(80, Math.max(20, pct));
+      if (displayedSidebarModeRef.current === 'detail') {
+        setDetailPct(clamped);
+      } else {
+        setCenterPct(clamped);
+      }
+    };
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
-      const pct = ((window.innerWidth - e.clientX) / window.innerWidth) * 100;
-      setPanelPct(Math.min(80, Math.max(20, pct)));
+      applyPct(((window.innerWidth - e.clientX) / window.innerWidth) * 100);
     };
     const onMouseUp = () => {
       if (!isDragging.current) return;
@@ -415,8 +434,7 @@ export default function App() {
     const onTouchMove = (e: TouchEvent) => {
       if (!isDragging.current) return;
       const touch = e.touches[0];
-      const pct = ((window.innerWidth - touch.clientX) / window.innerWidth) * 100;
-      setPanelPct(Math.min(80, Math.max(20, pct)));
+      applyPct(((window.innerWidth - touch.clientX) / window.innerWidth) * 100);
     };
     const onTouchEnd = () => {
       if (!isDragging.current) return;
